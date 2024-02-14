@@ -5,15 +5,15 @@ class SetForm {
   constructor() {
     this.counter = 0;
     this.initializeForm();
-    this.initializeGameList(); // Инициализация списка игр в начале
+    this.initializeGameList(); // Initializing the list of games at the beginning
   }
 
   initializeForm() {
-    // Создание формы
+    // Creating a Form
     this.form = document.createElement('form');
     this.form.id = 'setForm';
 
-    // Создание элементов формы
+    // Creating Form Elements
     this.setnameLabel = document.createElement('label');
     this.setnameLabel.textContent = 'Enter set name:';
     this.setnameInput = document.createElement('input');
@@ -27,12 +27,12 @@ class SetForm {
     this.GameListSelect.name = 'GameList';
     this.GameListSelect.multiple = true;
 
-    // Создание кнопки отправки формы
+    // Creating a form submit button
     this.submitButton = document.createElement('input');
     this.submitButton.type = 'submit';
     this.submitButton.value = 'Send';
 
-    // Добавление элементов к форме
+    // Adding Elements to a Form
     this.form.appendChild(this.setnameLabel);
     this.form.appendChild(this.setnameInput);
     this.form.appendChild(document.createElement('br'));
@@ -41,24 +41,24 @@ class SetForm {
     this.form.appendChild(document.createElement('br'));
     this.form.appendChild(this.submitButton);
 
-    // Добавление формы к документу
+    // Adding a form to a document
     document.body.appendChild(this.form);
 
-    // Инициализация GamemathForm с передачей callback-функции
+    // Initializing GamemathForm with passing a callback function
     this.gamemathForm = new GamemathForm((createdGame) => {
-      // Обновление GameListSelect в SetForm с созданной игрой
+      // Update GameListSelect in SetForm with created game
       const option = document.createElement('option');
       option.value = createdGame.id;
       option.textContent = createdGame.name;
       this.GameListSelect.appendChild(option);
     });
 
-    // Добавление обработчика события отправки формы
+    // Adding a form submit event handler
     this.form.addEventListener('submit', (event) => this.handleSubmit(event));
   }
 
   initializeGameList() {
-     // Инициализация GameListSelect с существующими играми
+     // Initializing GameListSelect with existing games
     for (const game of gameList) {
       const option = document.createElement('option');
       option.value = game.id;
@@ -70,11 +70,11 @@ class SetForm {
   handleSubmit(event) {
     event.preventDefault();
 
-    // Получение введенного имени для набора
+    // Retrieving the entered name for dialing
     const enteredsetName = this.setnameInput.value;
     const issetNameExists = setList.some((set) => set.name === enteredsetName);
 
-     // Генерация уникального ID для набора
+     // Generating a unique ID for a set
     while (setList.some((set) => set.id === this.counter)) {
       this.counter++;
     }
@@ -82,19 +82,19 @@ class SetForm {
     if (issetNameExists) {
       alert('This name is already in use');
     } else {
-      // Получение выбранных элементов из списка игр
+      // Getting selected items from the games list
       const selectedGameListOptions = this.GameListSelect.selectedOptions;
       var selectedGameNames = Array.from(selectedGameListOptions).map(option => option.textContent);
       const selectedGameListIds = Array.from(selectedGameListOptions).map((option) => option.value);
 
-      // Создание объекта набора
+      // Creating a Set Object
       const createdSet = {
         id: this.counter,
         name: enteredsetName,
         gamesInSet: selectedGameListIds,
       };
 
-      // Добавление набора в setList
+      // Adding a set to setList
       setList.push(createdSet);
 
       console.log('Set name:', enteredsetName);

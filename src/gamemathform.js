@@ -8,11 +8,11 @@ class GamemathForm {
   }
 
   initializeForm() {
-    // Создание формы
+    // Creating a Form
     this.form = document.createElement('form');
     this.form.id = 'GamemathForm';
     
-    // Создание элементов формы
+    // Creating Form Elements
     this.gamenameLabel = document.createElement('label');
     this.gamenameLabel.textContent = 'Enter game name:';
     this.gamenameInput = document.createElement('input');
@@ -25,7 +25,7 @@ class GamemathForm {
     this.mathListSelect = document.createElement('select');
     this.mathListSelect.name = 'mathList';
 
-    // Заполнение списка MathList
+    // Filling the MathList
     for (const mathItem of GamemathList) {
       const option = document.createElement('option');
       option.value = mathItem.id;
@@ -33,12 +33,12 @@ class GamemathForm {
       this.mathListSelect.appendChild(option);
     }
 
-    // Создание кнопки отправки формы
+    // Creating a form submit button
     this.submitButton = document.createElement('input');
     this.submitButton.type = 'submit';
     this.submitButton.value = 'Send';
 
-    // Добавление элементов к форме
+    // Adding Elements to a Form
     this.form.appendChild(this.gamenameLabel);
     this.form.appendChild(this.gamenameInput);
     this.form.appendChild(document.createElement('br'));
@@ -47,43 +47,43 @@ class GamemathForm {
     this.form.appendChild(document.createElement('br'));
     this.form.appendChild(this.submitButton);
 
-    // Добавление формы к документу
+    // Adding a form to a document
     document.body.appendChild(this.form);
 
-    // Добавление обработчика события отправки формы
+    // Adding a form submit event handler
     this.form.addEventListener('submit', (event) => this.handleSubmit(event));
   }
 
   handleSubmit(event) {
     event.preventDefault();
 
-    // Получение введенного имени
+    // Retrieving the entered name
     const enteredGameName = this.gamenameInput.value;
     const isGameNameExists = gameList.some((game) => game.name === enteredGameName);
 
     if (isGameNameExists) {
       alert('This name is already in use');
     } else {
-      // Получение выбранного MathList
+      // Getting the selected MathList
       const selectedMathListId = this.mathListSelect.value;
       const selectedMathList = GamemathList.find((item) => item.id == selectedMathListId);
 
-      // Генерация уникального ID для игры
+      // Generating a unique ID for the game
       while (gameList.some((game) => game.id === this.counter)) {
         this.counter++;
       }
 
-      // Создание объекта игры
+      // Creating a Game Object
       const createdGame = {
         id: this.counter,
         name: enteredGameName,
         math: selectedMathListId,
       };
 
-      // Добавление игры в gameList
+      // Adding a game to gameList
       gameList.push(createdGame);
 
-      // Добавление созданной игры в выпадающий список другой формы (если есть callback)
+      // Adding the created game to the drop-down list of another form (if there is a callback)
       if (this.onGameCreatedCallback) {
         this.onGameCreatedCallback(createdGame);
       }

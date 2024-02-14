@@ -19,7 +19,7 @@ JPmathListLabel.textContent = 'Choose JPMathList:';
 var JPmathListSelect = document.createElement('select');
 JPmathListSelect.name = 'JPmathList';
 
-// Заполняем список существующими JPMathList
+// Filling the list with existing JPMathList
 for (var i = 0; i < JackpotmathList.length; i++) {
   var option = document.createElement('option');
   option.value = JackpotmathList[i].id;
@@ -27,12 +27,12 @@ for (var i = 0; i < JackpotmathList.length; i++) {
   JPmathListSelect.appendChild(option);
 }
 
-// Создание кнопки отправки формы
+// Creating a form submit button
 var submitButton = document.createElement('input');
 submitButton.type = 'submit';
 submitButton.value = 'Send';
 
-// Добавление элементов к форме
+// Adding Elements to a Form
 form.appendChild(JPgamenameLabel);
 form.appendChild(JPgamenameInput);
 form.appendChild(document.createElement('br'));
@@ -41,10 +41,10 @@ form.appendChild(JPmathListSelect);
 form.appendChild(document.createElement('br')); 
 form.appendChild(submitButton);
 
-// Добавление формы к документу
+// Adding a form to a document
 document.body.appendChild(form);
 
-// Добавление обработчика события отправки формы
+// Adding a form submit event handler
 form.addEventListener('submit', function(event) {
   event.preventDefault();
   var enteredJPgameName = JPgamenameInput.value;
